@@ -166,11 +166,11 @@ oppia.directive('conversationSkin', [function() {
     controller: [
         '$scope', '$timeout', '$rootScope', '$window', 'messengerService',
         'oppiaPlayerService', 'urlService', 'focusService', 'ratingService',
-        'windowDimensionsService',
+        'windowDimensionsService', 'playerTranscriptService',
         function(
           $scope, $timeout, $rootScope, $window, messengerService,
           oppiaPlayerService, urlService, focusService, ratingService,
-          windowDimensionsService) {
+          windowDimensionsService, playerTranscriptService) {
 
       $scope.CONTINUE_BUTTON_FOCUS_LABEL = 'continueButton';
 
@@ -180,6 +180,7 @@ oppia.directive('conversationSkin', [function() {
       var TIME_PADDING_MSEC = 250;
       var TIME_SCROLL_MSEC = 600;
       var MIN_CARD_LOADING_DELAY_MSEC = 950;
+      var CONTENT_FOCUS_LABEL_PREFIX = 'content-focus-label-';
 
       var hasInteractedAtLeastOnce = false;
       var _answerIsBeingProcessed = false;
@@ -218,6 +219,10 @@ oppia.directive('conversationSkin', [function() {
       $scope.clearHelpCard = function() {
         $scope.helpCardHtml = null;
         $scope.helpCardHasContinueButton = false;
+      };
+
+      $scope.getContentFocusLabel = function(index) {
+        return CONTENT_FOCUS_LABEL_PREFIX + index;
       };
 
       // If the exploration is iframed, send data to its parent about its
@@ -322,7 +327,7 @@ oppia.directive('conversationSkin', [function() {
         if (_nextFocusLabel && index === $scope.transcript.length - 1) {
           focusService.setFocusIfOnDesktop(_nextFocusLabel);
         } else {
-          focusService.setFocusIfOnDesktop($scope.activeCard.contentHtmlFocusLabel);
+          focusService.setFocusIfOnDesktop($scope.getContentFocusLabel(index));
         }
       };
 
@@ -351,7 +356,6 @@ oppia.directive('conversationSkin', [function() {
         $scope.transcript.push({
           stateName: stateName,
           contentHtml: contentHtml,
-          contentHtmlFocusLabel: focusService.generateFocusLabel(),
           interactionHtml: interactionHtml,
           interactionIsInline: oppiaPlayerService.isInteractionInline(
             stateName),
