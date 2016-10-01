@@ -200,9 +200,9 @@
                  ng-click="showExplorationEditor(exploration.id)">
             <div class="title-section" style="background-color: <[exploration.thumbnail_bg_color]>;">
               <img class="thumbnail-image" ng-src="<[exploration.thumbnail_icon_url]>">
-              <h2 class="activity-title protractor-test-exp-summary-tile-title">
+              <div class="activity-title protractor-test-exp-summary-tile-title">
                 <span><[exploration.title || 'Untitled' | truncate:40]></span>
-              </h2>
+              </div>
             </div>
             <div class="title-section-mask"></div>
 
@@ -293,7 +293,7 @@
                   <div class="title-section"
                        style="background-color: <[collection.thumbnail_bg_color]>;">
                     <img class="thumbnail-image" ng-src="<[collection.thumbnail_icon_url]>">
-                    <h2 class="activity-title"><[collection.title || 'Untitled']></h2>
+                    <div class="activity-title"><[collection.title || 'Untitled']></div>
                   </div>
 
                   <div>
